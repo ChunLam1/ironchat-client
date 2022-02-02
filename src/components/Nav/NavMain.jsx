@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import useAuth from "../../auth/useAuth";
 import "../../styles/NavMain.css";
+import FormServer from "../Forms/FormServer";
 
 const NavMain = () => {
   const { isLoggedIn, currentUser, removeUser } = useAuth();
@@ -14,16 +15,7 @@ const NavMain = () => {
       </NavLink>
       {isLoggedIn && (
         <>
-          <form
-            onSubmit={() => {
-              handleSubmit;
-            }}
-          >
-            <div>
-              <label htmlFor="name">Server's name</label>
-              <input type="text" name="name" />
-            </div>
-          </form>
+          <FormServer />
           <button onClick={removeUser}>Log-Out</button>
         </>
       )}
