@@ -17,9 +17,6 @@ function App() {
         </Route>
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
-        <Route element={<PrivateRoute />}>
-          <Route path="/profile" element={<Profile />} />
-        </Route>
       </Routes>
     </div>
   );
