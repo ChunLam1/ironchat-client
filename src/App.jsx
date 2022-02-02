@@ -3,8 +3,8 @@ import NavMain from "./components/Nav/NavMain";
 import Home from "./pages/Home";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
-import Profile from "./pages/Profile";
 import PrivateRoute from "./components/ProtectedRoute/PrivateRoute";
+import Server from "./pages/Server"
 
 function App() {
   return (
