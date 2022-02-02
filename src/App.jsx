@@ -7,19 +7,22 @@ import Profile from "./pages/Profile";
 import PrivateRoute from "./components/ProtectedRoute/PrivateRoute";
 
 function App() {
-	return (
-		<div className="App">
-			<NavMain />
-			<Routes>
-				<Route path="/" element={<Home />} />
-				<Route path="/signin" element={<Signin />} />
-				<Route path="/signup" element={<Signup />} />
-				<Route element={<PrivateRoute />}>
-					<Route path="/profile" element={<Profile />} />
-				</Route>
-			</Routes>
-		</div>
-	);
+  return (
+    <div className="App">
+      <NavMain />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route element={<PrivateRoute />}>
+          <Route path="/server/:id" element={<Server />} />
+        </Route>
+        <Route path="/signin" element={<Signin />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route element={<PrivateRoute />}>
+          <Route path="/profile" element={<Profile />} />
+        </Route>
+      </Routes>
+    </div>
+  );
 }
 
 export default App;
