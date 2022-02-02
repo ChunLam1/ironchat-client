@@ -14,7 +14,6 @@ const NavMain = () => {
       </NavLink>
       {isLoggedIn && (
         <>
-          <NavLink to="/profile">{currentUser && currentUser.email}</NavLink>
           <form
             onSubmit={() => {
               handleSubmit;
