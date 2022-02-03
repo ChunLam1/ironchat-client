@@ -3,34 +3,53 @@ import apiHandler from "../api/apiHandler";
 import useAuth from "../auth/useAuth";
 
 const Profile = () => {
-    const { currentUser } = useAuth();
-    const [name, setName] = useState(currentUser.name)
+  const { currentUser } = useAuth();
+  const [name, setName] = useState(currentUser.name);
 
-    useEffect(() => {
-    console.log(name)
+  const id = currentUser._id;
 
-    },[])
+  useEffect(() => {
+    currentUser.name = name;
+  }, [name]);
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        apiHandler
-        .patch("/profile", {name})
-        .then((newProfile)=>{
-            // res.status(200).json({newProfile})
-            console.log(newProfile)
-        })
-    .catch((e)=> console.log(e))
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const newProfile = await apiHandler.patch("/profile", { name, _id: id });
+      console.log(newProfile);
+    } catch (error) {
+      console.error(e);
     }
+    // apiHandler
+    //   .patch("/profile", { name, _id: id })
+    //   .then((newProfile) => {
+    //     console.log(newProfile);
+    //   })
+    //   .then(() => (currentUser.name = name))
+    //   .catch((e) => console.log(e));
+  };
+
+  const handlePicture = () => {};
 
   return (
-  <div>
+    <div>
       <form onSubmit={handleSubmit}>
-        <img style={{width:"200px",borderRadius:"50%"}} src="https://avatarfiles.alphacoders.com/246/thumb-246032.jpg" />
-        <input style={{borderRadius:"50px",border:"none", cursor:"pointer"}} type="text" value={name} onChange={(e)=> setName(e.target.value)}></input>
-        <button style={{borderRadius:"50px"}}>Ok!!</button>
+        <img
+          style={{ width: "200px", borderRadius: "50%" }}
+          src="https://avatarfiles.alphacoders.com/246/thumb-246032.jpg"
+          alt="alt"
+          onClick={handlePicture}
+        />
+        <input
+          style={{ borderRadius: "50px", border: "none", cursor: "pointer" }}
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        ></input>
+        <button style={{ borderRadius: "50px" }}>Ok!!</button>
       </form>
-  </div>
-    );
+    </div>
+  );
 };
 
 export default Profile;
