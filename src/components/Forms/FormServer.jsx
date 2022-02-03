@@ -1,17 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import apiHandler from "../../api/apiHandler";
 
-const FormServer = () => {
+const FormServer = ({ userId }) => {
   const [name, setName] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await apiHandler.post("/server", { name });
+      await apiHandler.post("/server", { name, admins: userId });
     } catch (error) {
       console.error(e);
     }
   };
+
+  useEffect(() => {
+    console.log(userId);
+  }, []);
 
   return (
     <>

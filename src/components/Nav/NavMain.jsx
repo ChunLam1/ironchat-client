@@ -1,12 +1,21 @@
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import useAuth from "../../auth/useAuth";
 import "../../styles/NavMain.css";
 import FormServer from "../Forms/FormServer";
 
 const NavMain = () => {
-  const { isLoggedIn, currentUser, removeUser } = useAuth();
+  const { isLoading, currentUser, isLoggedIn, removeUser } = useAuth();
+  const [userId, setUserId] = useState("");
 
-  const handleSubmit = () => {};
+  useEffect(async () => {
+    if (isLoading) return;
+    try {
+      setUserId(currentUser._id);
+    } catch (error) {
+      console.error(error);
+    }
+  }, [isLoading]);
 
   return (
     <nav className="NavMain">
@@ -15,7 +24,7 @@ const NavMain = () => {
       </NavLink>
       {isLoggedIn && (
         <>
-          <FormServer />
+          <FormServer userId={userId} />
           <button onClick={removeUser}>Log-Out</button>
         </>
       )}

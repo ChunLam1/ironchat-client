@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
 import apiHandler from "../api/apiHandler";
 
 const Home = () => {
@@ -17,8 +17,12 @@ const Home = () => {
   return (
     <div>
       <h1>Welcome 🏡</h1>
-      {servers.map((server) => (
-		<Link to={`/server/${server._id}`} key={server._id}>{server.name}</Link>
+      {servers.map((server, i) => (
+        <div key={i}>
+          <Link to={`/server/${server._id}`} key={server._id}>
+            {server.name}
+          </Link>
+        </div>
       ))}
     </div>
   );
