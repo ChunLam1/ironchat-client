@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import useAuth from "../../auth/useAuth";
 import "../../styles/NavMain.css";
 import FormServer from "../Forms/FormServer";
@@ -26,6 +26,9 @@ const NavMain = () => {
         <>
           <FormServer userId={userId} />
           <button onClick={removeUser}>Log-Out</button>
+          <Link to="/profile" > 
+            <i className="fas fa-user-circle" style={{fontSize:"30px"}}></i>
+          </Link>
         </>
       )}
       {!isLoggedIn && (
