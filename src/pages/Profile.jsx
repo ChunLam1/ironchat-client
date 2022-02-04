@@ -3,7 +3,7 @@ import apiHandler from "../api/apiHandler";
 import useAuth from "../auth/useAuth";
 
 const Profile = () => {
-  const { currentUser } = useAuth();
+  const { currentUser, storeToken } = useAuth();
   const [name, setName] = useState(currentUser.name);
   console.log(currentUser,"---------------")
 
@@ -15,18 +15,11 @@ const Profile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // try {
-    //   const newProfile = await apiHandler.patch("/profile", { name, _id: id });
-    //   console.log(newProfile);
-    // } catch (error) {
-    //   console.error(e);
-    // }
     apiHandler
-      .patch("/profile", { name, _id: id })
-      .then((newProfile) => {
-        console.log(newProfile,"++++++++++++++++++++++++++");
+      .patch(`/profile/${currentUser._id}`, { name })
+      .then(({data}) => {
+        storeToken(data.newAuthToken)
       })
-      // .then(() => (currentUser.name = newProfile.name))
       .catch((e) => console.log(e));
   };
 
