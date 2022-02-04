@@ -5,28 +5,29 @@ import useAuth from "../auth/useAuth";
 const Profile = () => {
   const { currentUser } = useAuth();
   const [name, setName] = useState(currentUser.name);
+  console.log(currentUser,"---------------")
 
   const id = currentUser._id;
 
   useEffect(() => {
-    currentUser.name = name;
+    
   }, [name]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const newProfile = await apiHandler.patch("/profile", { name, _id: id });
-      console.log(newProfile);
-    } catch (error) {
-      console.error(e);
-    }
-    // apiHandler
-    //   .patch("/profile", { name, _id: id })
-    //   .then((newProfile) => {
-    //     console.log(newProfile);
-    //   })
-    //   .then(() => (currentUser.name = name))
-    //   .catch((e) => console.log(e));
+    // try {
+    //   const newProfile = await apiHandler.patch("/profile", { name, _id: id });
+    //   console.log(newProfile);
+    // } catch (error) {
+    //   console.error(e);
+    // }
+    apiHandler
+      .patch("/profile", { name, _id: id })
+      .then((newProfile) => {
+        console.log(newProfile,"++++++++++++++++++++++++++");
+      })
+      // .then(() => (currentUser.name = newProfile.name))
+      .catch((e) => console.log(e));
   };
 
   const handlePicture = () => {};

@@ -16,7 +16,11 @@ const Server = () => {
   }, []);
 
   // Ici faire un formulaire pour le chat
-  return <div></div>;
+  return (
+  <div>
+<h1>Server</h1>
+  </div>
+  )
 };
 
 export default Server;
