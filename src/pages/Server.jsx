@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import apiHandler from "../api/apiHandler";
 import useAuth from "../auth/useAuth";
 
-import { io } from "socket.io-client"
+import { io } from "socket.io-client";
 
 const Server = () => {
   // const [server, setServer] = useState({});
@@ -11,27 +11,27 @@ const Server = () => {
   // const { currentUser } = useAuth();
   // console.log(currentUser._id);
   // useEffect(() => {
-    // apiHandler.get(`/server/${id}`).then((res) => {
-    //   setServer(res.data.server);
-    // });
-    // apiHandler.get("/api/auth/me").then((v) => console.log("Me :", v));
+  // apiHandler.get(`/server/${id}`).then((res) => {
+  //   setServer(res.data.server);
+  // });
+  // apiHandler.get("/api/auth/me").then((v) => console.log("Me :", v));
   // }, []);
 
   useEffect(() => {
-    const socket = io("http://localhost:4200")
-    
+    const socket = io("http://localhost:4200");
+
     socket.on("toto", (payload) => {
-      console.log(payload)
-      console.log("conected")
-    })
-  }, [])
-  
+      console.log(payload);
+      console.log("connected");
+    });
+  }, []);
+
   // Ici faire un formulaire pour le chat
   return (
     <div>
       <h1>Server</h1>
     </div>
-  )
+  );
 };
 
 export default Server;
