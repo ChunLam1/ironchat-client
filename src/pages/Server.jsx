@@ -1,35 +1,35 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import apiHandler from "../api/apiHandler";
 import useAuth from "../auth/useAuth";
+import "../styles/socketio.css"
 
 import { io } from "socket.io-client";
 
 const Server = () => {
-  // const [server, setServer] = useState({});
-  // const { id } = useParams();
-  // const { currentUser } = useAuth();
-  // console.log(currentUser._id);
-  // useEffect(() => {
-  // apiHandler.get(`/server/${id}`).then((res) => {
-  //   setServer(res.data.server);
-  // });
-  // apiHandler.get("/api/auth/me").then((v) => console.log("Me :", v));
-  // }, []);
+  const [socket, setSocket] = useState(null)
+  const inputEl = useRef("")
 
   useEffect(() => {
-    const socket = io("http://localhost:4200");
+    setSocket(io("http://localhost:4200"))
+    console.log(socket)
+  }, [])
 
-    socket.on("toto", (payload) => {
-      console.log(payload);
-      console.log("connected");
-    });
-  }, []);
+  const sendMessage = (e) => {
+    e.preventDefault()
+    const msg = inputEl.current.value
+    socket.emit("message", {message: msg})
+  }
 
   // Ici faire un formulaire pour le chat
   return (
     <div>
       <h1>Server</h1>
+      <ul id="messages"></ul>
+    <form  id="form" onSubmit={(e) => sendMessage(e)}>
+      <input id="input" autoComplete="off" ref={inputEl} />
+      <button>Send</button>
+    </form>
     </div>
   );
 };
