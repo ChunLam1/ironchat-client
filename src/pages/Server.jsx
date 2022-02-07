@@ -9,12 +9,18 @@ import { io } from "socket.io-client";
 const Server = () => {
   const [socket, setSocket] = useState(null);
   const [messages, setMessages] = useState([]);
+  const [server, setServer] = useState({});
   const inputEl = useRef("");
   const serverId = useParams();
   const { currentUser } = useAuth();
 
   useEffect(() => {
     setSocket(io("http://localhost:4200"));
+
+    apiHandler
+      .get(`http://localhost:8080/server/${serverId.id}`)
+      .then((res) => setServer(res.data.server))
+      .catch((e) => console.error(e));
   }, []);
 
   useEffect(() => {
@@ -22,6 +28,7 @@ const Server = () => {
       .get(`http://localhost:8080/server/${serverId.id}/messages`)
       .then((res) => {
         setMessages(res.data.messages);
+        console.log(res.data);
       })
       .catch((e) => console.error(e));
   }, []);
@@ -39,7 +46,7 @@ const Server = () => {
   // Ici faire un formulaire pour le chat
   return (
     <div>
-      <h1>Server</h1>
+      <h1>{server.name}</h1>
       <ul id="messages">
         {messages.map((msg) => (
           <li key={msg._id}>
