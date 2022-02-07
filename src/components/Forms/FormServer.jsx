@@ -7,15 +7,15 @@ const FormServer = ({ userId }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await apiHandler.post("/server", { name, admins: userId });
+      await apiHandler.post("/server", { 
+        name,
+        participants: userId,
+        admins: userId
+      });
     } catch (error) {
       console.error(e);
     }
   };
-
-  useEffect(() => {
-    console.log(userId);
-  }, []);
 
   return (
     <>
