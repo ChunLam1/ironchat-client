@@ -19,10 +19,10 @@ const Server = () => {
 
   useEffect(() => {
     apiHandler
-      .get(`http://localhost:8080/server/${serverId}/messages`)
+      .get(`http://localhost:8080/server/${serverId.id}/messages`)
       .then((res) => setMessages(res.data.message))
       .catch(e => console.error(e))
-  }, [messages])
+  }, [])
 
   const sendMessage = (e) => {
     e.preventDefault()
