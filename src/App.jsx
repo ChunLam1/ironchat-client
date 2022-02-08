@@ -18,8 +18,6 @@ function App() {
           <Route path="/server/:id" element={<Server />} />
           <Route path="/profile" element={<Profile/>}/>
         </Route>
-        <Route path="/signin" element={<Signin />} />
-        <Route path="/signup" element={<Signup />} />
       </Routes>
     </div>
   );

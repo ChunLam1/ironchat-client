@@ -19,22 +19,9 @@ const NavMain = () => {
 
   return (
     <nav className="NavMain">
-      <NavLink className="logo" to="/" style={{fontSize:"30px",fontWeight:"bold"}}>
-        IronChat
-      </NavLink>
       {isLoggedIn && (
         <>
-          <FormServer userId={userId} />
           <button onClick={removeUser}>Log-Out</button>
-          <Link to="/profile" > 
-            <i className="fas fa-user-circle" style={{fontSize:"30px"}}></i>
-          </Link>
-        </>
-      )}
-      {!isLoggedIn && (
-        <>
-          <NavLink to="/signin">Log in</NavLink>
-          <NavLink to="/signup">Sign Up</NavLink>
         </>
       )}
     </nav>

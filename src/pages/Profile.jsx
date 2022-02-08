@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import apiHandler from "../api/apiHandler";
 import useAuth from "../auth/useAuth";
+import { NavLink } from "react-router-dom";
 
 const Profile = () => {
   const { currentUser, storeToken } = useAuth();
@@ -27,6 +28,9 @@ const Profile = () => {
 
   return (
     <div>
+      <NavLink className="logo" to="/">
+        IronChat
+      </NavLink>
       <form onSubmit={handleSubmit}>
         <img
           style={{ width: "200px", borderRadius: "50%" }}

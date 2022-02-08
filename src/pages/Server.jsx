@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import apiHandler from "../api/apiHandler";
 import useAuth from "../auth/useAuth";
 import "../styles/socketio.css";
+import { Link,NavLink } from "react-router-dom";
+
 
 import { io } from "socket.io-client";
 
@@ -27,8 +29,8 @@ const Server = () => {
     apiHandler
       .get(`http://localhost:8080/server/${serverId.id}`)
       .then((res) => {
-        setServer(res.data.server);
         socket.on("new-message", fetchMessages);
+        setServer(res.data.server);
       })
       .catch((e) => console.error(e));
   }, []);
@@ -45,6 +47,7 @@ const Server = () => {
       userId: currentUser._id,
       content: msg,
     });
+    inputEl.current.value = "";
   };
 
   // Ici faire un formulaire pour le chat
@@ -52,6 +55,12 @@ const Server = () => {
     <div>
       <h1>{server.name}</h1>
       <ul id="messages">
+      <NavLink className="logo" to="/">
+        IronChat
+      </NavLink>
+          <Link to="/profile" > 
+            <i className="fas fa-user-circle" style={{fontSize:"30px"}}></i>
+          </Link>
         {messages.map((msg) => (
           <li key={msg._id}>
             <b>{msg.userId.name} : </b>
