@@ -9,6 +9,11 @@
 html {
 	font-family: "Manrope", sans-serif;
 }
+body{
+	background: url("../images/backGround.jpg");
+	background-size: cover;
+	color: cadetblue;
+}
 
 a {
 	text-decoration: none;
@@ -17,4 +22,18 @@ a {
 
 ul {
 	list-style-type: none;
+}
+.server{
+	display: flex;
+	cursor: pointer;
+}
+.serverLogo{
+	width:40px;
+	border-radius: 50%;
+	transition: width 2s;
+
+}
+.serverLogo:hover{
+	width: 60px;
+
 }

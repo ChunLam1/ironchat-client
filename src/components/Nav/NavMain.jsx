@@ -19,8 +19,8 @@ const NavMain = () => {
 
   return (
     <nav className="NavMain">
-      <NavLink className="logo" to="/">
-        App name
+      <NavLink className="logo" to="/" style={{fontSize:"30px",fontWeight:"bold"}}>
+        IronChat
       </NavLink>
       {isLoggedIn && (
         <>

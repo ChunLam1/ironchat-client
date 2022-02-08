@@ -14,24 +14,28 @@ const Server = () => {
   const serverId = useParams();
   const { currentUser } = useAuth();
 
+  const fetchMessages = () => {
+    apiHandler
+      .get(`http://localhost:8080/server/${serverId.id}/messages`)
+      .then((res) => setMessages(res.data.messages))
+      .catch((e) => console.error(e));
+  };
+
   useEffect(() => {
     setSocket(io("http://localhost:4200"));
 
     apiHandler
       .get(`http://localhost:8080/server/${serverId.id}`)
-      .then((res) => setServer(res.data.server))
+      .then((res) => {
+        setServer(res.data.server);
+        socket.on("new-message", fetchMessages);
+      })
       .catch((e) => console.error(e));
   }, []);
 
   useEffect(() => {
-    apiHandler
-      .get(`http://localhost:8080/server/${serverId.id}/messages`)
-      .then((res) => {
-        setMessages(res.data.messages);
-        console.log(res.data);
-      })
-      .catch((e) => console.error(e));
-  }, []);
+    fetchMessages();
+  }, [server]);
 
   const sendMessage = (e) => {
     e.preventDefault();
@@ -55,7 +59,7 @@ const Server = () => {
           </li>
         ))}
       </ul>
-      <form id="form" onSubmit={(e) => sendMessage(e)}>
+      <form id="form" onSubmit={sendMessage}>
         <input id="input" autoComplete="off" ref={inputEl} />
         <button>Send</button>
       </form>

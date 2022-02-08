@@ -6,6 +6,7 @@ import Signup from "./pages/Signup";
 import PrivateRoute from "./components/ProtectedRoute/PrivateRoute";
 import Server from "./pages/Server";
 import Profile from "./pages/Profile";
+import "./styles/global.css"
 
 function App() {
   return (
