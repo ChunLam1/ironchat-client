@@ -4,6 +4,8 @@ import apiHandler from "../api/apiHandler";
 import useAuth from "../auth/useAuth";
 import "../styles/socketio.css";
 import { Link, NavLink } from "react-router-dom";
+import Profile from "./Profile";
+import NavMain from "../components/Nav/NavMain";
 
 import { io } from "socket.io-client";
 
@@ -15,6 +17,8 @@ const Server = () => {
   const inputEl = useRef("");
   const serverId = useParams();
   const { currentUser } = useAuth();
+
+  const [profile, setProfile] = useState(false);
 
   const fetchMessages = (value) => {
     console.log("je suis fetchmEssage et j'ai recu", value);
@@ -64,12 +68,20 @@ const Server = () => {
             IronChat
           </NavLink>
         </div>
-        <div>
-          <Link to="/profile">
-            <i className="fas fa-user-circle" style={{ fontSize: "30px" }}></i>
-          </Link>
+        <div className="homeicone">
+          <i
+            onClick={() => setProfile(!profile)}
+            className="fas fa-user-circle"
+            style={{ fontSize: "30px" }}
+          ></i>
         </div>
       </div>
+      {profile ? (
+                  <div className="profile">
+                    <Profile />
+                    <NavMain/>
+                  </div>
+                ) : null}
       <h1>Server name: {server.name}</h1>
       <ul id="messages">
         {messages.map((msg) => (
