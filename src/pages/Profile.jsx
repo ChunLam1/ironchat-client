@@ -12,15 +12,6 @@ const Profile = () => {
     imageTmp: "",
   });
 
-  // useEffect(() => {
-  //   const initFormData = async () => {
-  //     const apiRes = await apiHandler.get(`/profile/${id}`);
-  //     delete apiRes.data._id;
-  //     setState({ ...apiRes.data });
-  //   };
-  //   initFormData();
-  // }, []);
-
   const id = currentUser._id;
 
   const handleChange = (e) => {

@@ -1,12 +1,11 @@
 import { Routes, Route } from "react-router-dom";
 import NavMain from "./components/Nav/NavMain";
 import Home from "./pages/Home";
-import Signin from "./pages/Signin";
-import Signup from "./pages/Signup";
 import PrivateRoute from "./components/ProtectedRoute/PrivateRoute";
 import Server from "./pages/Server";
 import Profile from "./pages/Profile";
-import "./styles/global.css"
+import "./styles/global.css";
+import FormServer from "./components/Forms/FormServer";
 
 function App() {
   return (
@@ -15,9 +14,10 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route element={<PrivateRoute />}>
           <Route path="/server/:id" element={<Server />} />
-          <Route path="/profile" element={<Profile/>}/>
+          <Route path="/profile" element={<Profile />} />
         </Route>
       </Routes>
+      <FormServer />
       <NavMain />
     </div>
   );
