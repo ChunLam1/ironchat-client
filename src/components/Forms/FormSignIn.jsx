@@ -40,6 +40,7 @@ const FormSignIn = () => {
           name="email"
           onChange={handleChange}
           value={email}
+          autoComplete="username"
         />
       </div>
       <div>
@@ -50,6 +51,7 @@ const FormSignIn = () => {
           name="password"
           onChange={handleChange}
           value={password}
+          autoComplete="current-password"
         />
       </div>
         <button className="btnsub">Submit</button>
