@@ -14,6 +14,8 @@ const socket = io(process.env.SOCKET_URL || "http://localhost:4200");
 const Server = () => {
   const [messages, setMessages] = useState([]);
   const [server, setServer] = useState({});
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingMessage, setEditingMessage] = useState({});
   const inputEl = useRef("");
   const serverId = useParams();
   const { currentUser } = useAuth();
@@ -59,6 +61,44 @@ const Server = () => {
     inputEl.current.value = "";
   };
 
+  const getMessageId = (id) => {
+    apiHandler
+      .post(`${process.env.VITE_APP_BACKEND_URL}/server/message/${id}`)
+      .then((res) => {
+        console.log("------------------------", res);
+        // fetchMessages();
+        console.log("lol");
+      })
+      .catch((e) => console.log(e));
+  };
+
+  const editMessage = (message) => {
+    inputEl.current.value = message.content;
+    inputEl.current.focus();
+    setIsEditing(!isEditing);
+    setEditingMessage(message);
+  };
+
+  const sendEditMessage = (e) => {
+    e.preventDefault();
+
+    setIsEditing(!isEditing);
+    const messageId = editingMessage._id;
+    console.log(editingMessage);
+    const content = inputEl.current.value;
+
+    apiHandler
+      .patch(
+        `${process.env.VITE_APP_BACKEND_URL}/server/message/${messageId}`,
+        { content }
+      )
+      .then((res) => {
+        inputEl.current.value = "";
+        console.log(res);
+      })
+      .catch((e) => console.log(e));
+  };
+
   // Ici faire un formulaire pour le chat
   return (
     <div>
@@ -77,21 +117,30 @@ const Server = () => {
         </div>
       </div>
       {profile ? (
-                  <div className="profile">
-                    <Profile />
-                    <NavMain/>
-                  </div>
-                ) : null}
+        <div className="profile">
+          <Profile />
+          <NavMain />
+        </div>
+      ) : null}
       <h1>Server name: {server.name}</h1>
       <ul id="messages">
         {messages.map((msg) => (
           <li key={msg._id}>
             <b>{msg.userId.name} : </b>
-            {msg.content}
+            <div>
+              {msg.content}
+              <div className="message-edit">
+                <i
+                  className="fas fa-trash"
+                  onClick={() => getMessageId(msg._id)}
+                />
+                <i className="fas fa-pencil" onClick={() => editMessage(msg)} />
+              </div>
+            </div>
           </li>
         ))}
       </ul>
-      <form id="form" onSubmit={sendMessage}>
+      <form id="form" onSubmit={!isEditing ? sendMessage : sendEditMessage}>
         <input id="input" autoComplete="off" ref={inputEl} />
         <button>Send</button>
       </form>

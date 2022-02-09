@@ -36,24 +36,25 @@ const Home = () => {
                 </NavLink>
               </div>
               <div className="homeicone">
-              <i onClick={()=>setAddserver(!addserver)}
-              class="fa-solid fa-plus"
-              style={{ fontSize: "30px" }}
-              ></i>
+                <i
+                  onClick={() => setAddserver(!addserver)}
+                  class="fa-solid fa-plus"
+                  style={{ fontSize: "30px" }}
+                ></i>
                 <i
                   onClick={() => setProfile(!profile)}
                   className="fas fa-user-circle"
                   style={{ fontSize: "30px" }}
                 ></i>
                 {addserver ? (
-                <div className="servdiv">
-                  <FormServer/>
-                </div>
-                ):null}
+                  <div className="servdiv">
+                    <FormServer />
+                  </div>
+                ) : null}
                 {profile ? (
                   <div className="profile">
                     <Profile />
-                    <NavMain/>
+                    <NavMain />
                   </div>
                 ) : null}
                 {/* <Link to="/profile">

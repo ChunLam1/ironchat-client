@@ -145,3 +145,8 @@ ul {
   width: 20vw;
   border-radius: 10px;
 }
+
+.message-edit i {
+  margin: 0 8px;
+  cursor: pointer;
+}
