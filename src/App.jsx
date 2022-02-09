@@ -11,7 +11,6 @@ import "./styles/global.css"
 function App() {
   return (
     <div className="App">
-      <NavMain />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route element={<PrivateRoute />}>
@@ -19,6 +18,7 @@ function App() {
           <Route path="/profile" element={<Profile/>}/>
         </Route>
       </Routes>
+      <NavMain />
     </div>
   );
 }

@@ -3,20 +3,21 @@ import { useParams } from "react-router-dom";
 import apiHandler from "../api/apiHandler";
 import useAuth from "../auth/useAuth";
 import "../styles/socketio.css";
-import { Link,NavLink } from "react-router-dom";
-
+import { Link, NavLink } from "react-router-dom";
 
 import { io } from "socket.io-client";
 
+const socket = io("http://localhost:4200");
+
 const Server = () => {
-  const [socket, setSocket] = useState(null);
   const [messages, setMessages] = useState([]);
   const [server, setServer] = useState({});
   const inputEl = useRef("");
   const serverId = useParams();
   const { currentUser } = useAuth();
 
-  const fetchMessages = () => {
+  const fetchMessages = (value) => {
+    console.log("je suis fetchmEssage et j'ai recu", value);
     apiHandler
       .get(`http://localhost:8080/server/${serverId.id}/messages`)
       .then((res) => setMessages(res.data.messages))
@@ -24,12 +25,10 @@ const Server = () => {
   };
 
   useEffect(() => {
-    setSocket(io("http://localhost:4200"));
-
     apiHandler
       .get(`http://localhost:8080/server/${serverId.id}`)
       .then((res) => {
-        socket.on("new-message", fetchMessages);
+        socket.on("message-stored", fetchMessages);
         setServer(res.data.server);
       })
       .catch((e) => console.error(e));
@@ -53,14 +52,20 @@ const Server = () => {
   // Ici faire un formulaire pour le chat
   return (
     <div>
-      <h1>{server.name}</h1>
-      <ul id="messages">
-      <NavLink className="logo" to="/">
-        IronChat
-      </NavLink>
-          <Link to="/profile" > 
-            <i className="fas fa-user-circle" style={{fontSize:"30px"}}></i>
+      <div className="navLP">
+        <div className="divLogo">
+          <NavLink className="logo" to="/">
+            IronChat
+          </NavLink>
+        </div>
+        <div>
+          <Link to="/profile">
+            <i className="fas fa-user-circle" style={{ fontSize: "30px" }}></i>
           </Link>
+        </div>
+      </div>
+      <h1>Server name: {server.name}</h1>
+      <ul id="messages">
         {messages.map((msg) => (
           <li key={msg._id}>
             <b>{msg.userId.name} : </b>

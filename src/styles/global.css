@@ -22,7 +22,7 @@ ul {
   list-style-type: none;
 }
 .server {
-  display: flex;
+  /* display: flex; */
   cursor: pointer;
 }
 .serverLogo {
@@ -63,7 +63,7 @@ ul {
     gap: 20px;
 }
 .btnsub{
-	border-radius: 3px;
+	border-radius: 7px;
 	background: rgb(190, 190, 190);
 	border: 1px solid transparent;
 	padding: 5px 10px;
@@ -73,6 +73,7 @@ ul {
 	cursor: pointer;
 	font-size: 10px;
 	font-weight: bold;
+  border-left: 3px solid #666565;
 }
 .btnsub:hover{
 	color:rgb(69, 121, 151);
@@ -92,8 +93,30 @@ ul {
 }
 .serverContainer{
 	display: flex;
+  flex-direction: row;
+ justify-content: center;
+  
 }
 .serverContainerChild{
 	display: flex;
 	flex-direction: column;
+}
+.serverIcone{
+  display: none;
+position: absolute;
+}
+
+.serverLogo:hover + .serverIcone{
+  display: block;
+}
+.navLP{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0px 10px;
+}
+.divLogo{
+  margin-top: 7px;
+  font-size: 20px;
+  font-weight: bold;
 }
