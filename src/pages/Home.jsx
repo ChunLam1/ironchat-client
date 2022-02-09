@@ -13,7 +13,7 @@ const Home = () => {
 
   useEffect(() => {
     apiHandler
-      .get("http://localhost:8080/server/")
+      .get("/server/")
       .then((res) => {
         setServers(res.data.server);
       })

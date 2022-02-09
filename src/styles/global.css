@@ -23,8 +23,9 @@ ul {
 }
 .server {
   /* display: flex; */
-  cursor: pointer;
+  /* cursor: pointer; */
 }
+
 .serverLogo {
   width: 40px;
   border-radius: 50%;
@@ -100,6 +101,7 @@ ul {
 .serverContainerChild{
 	display: flex;
 	flex-direction: column;
+  cursor: pointer;
 }
 .serverIcone{
   display: none;

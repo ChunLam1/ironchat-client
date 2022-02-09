@@ -7,7 +7,7 @@ import { Link, NavLink } from "react-router-dom";
 
 import { io } from "socket.io-client";
 
-const socket = io("http://localhost:4200");
+const socket = io(process.env.SOCKET_URL || "http://localhost:8080");
 
 const Server = () => {
   const [messages, setMessages] = useState([]);
@@ -19,14 +19,14 @@ const Server = () => {
   const fetchMessages = (value) => {
     console.log("je suis fetchmEssage et j'ai recu", value);
     apiHandler
-      .get(`http://localhost:8080/server/${serverId.id}/messages`)
+      .get(`${process.env.SOCKET_URL}/server/${serverId.id}/messages` || `http://localhost:8080/server/${serverId.id}/messages`)
       .then((res) => setMessages(res.data.messages))
       .catch((e) => console.error(e));
   };
 
   useEffect(() => {
     apiHandler
-      .get(`http://localhost:8080/server/${serverId.id}`)
+      .get(`${process.env.SOCKET_URL}/server/${serverId.id}` || `http://localhost:8080/server/${serverId.id}`)
       .then((res) => {
         socket.on("message-stored", fetchMessages);
         setServer(res.data.server);
