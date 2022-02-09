@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
 import apiHandler from "../api/apiHandler";
 import useAuth from "../auth/useAuth";
 import IconAvatar from "../components/Icon/IconAvatarAdmin";
@@ -56,6 +57,9 @@ const Profile = () => {
 
   return (
     <div>
+      <NavLink className="logo" to="/">
+        IronChat
+      </NavLink>
       <form onSubmit={handleSubmit} onChange={handleChange}>
         <label className="label" htmlFor="image"></label>
         <IconAvatar
