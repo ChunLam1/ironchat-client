@@ -10,10 +10,6 @@ export default function IconAvatar({ clbk, avatar = "" }) {
     fileInput.current.click();
   };
 
-  const { currentUser } = useAuth();
-  console.log("JE SUIS DABS AVANTAR", currentUser);
-  console.log("AVVVVVVVVVVVARTAR", avatar);
-
   return (
     <div className={"is-clickable icon-avatar"} title="change avatar">
       {avatar && <img style={{ width: 250 }} src={avatar} alt="user avatar" />}

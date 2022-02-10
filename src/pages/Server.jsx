@@ -9,7 +9,11 @@ import NavMain from "../components/Nav/NavMain";
 
 import { io } from "socket.io-client";
 
-const socket = io(process.env.SOCKET_URL || "http://localhost:4200");
+console.log("hop", import.meta.env.VITE_APP_SOCKET_URL);
+
+const socket = io(
+  import.meta.env.VITE_APP_SOCKET_URL || "http://localhost:4200"
+);
 
 const Server = () => {
   const [messages, setMessages] = useState([]);
@@ -25,22 +29,21 @@ const Server = () => {
   const fetchMessages = (value) => {
     console.log("je suis fetchmEssage et j'ai recu", value);
     apiHandler
-      .get(
-        `${process.env.SOCKET_URL}/server/${serverId.id}/messages` ||
-          `http://localhost:8080/server/${serverId.id}/messages`
-      )
+      .get(`/server/${serverId.id}/messages`)
       .then((res) => setMessages(res.data.messages))
       .catch((e) => console.error(e));
   };
 
+  const handleError = (err) => {
+    console.error("here error backend", err);
+  };
+
   useEffect(() => {
     apiHandler
-      .get(
-        `${process.env.SOCKET_URL}/server/${serverId.id}` ||
-          `http://localhost:8080/server/${serverId.id}`
-      )
+      .get(`/server/${serverId.id}`)
       .then((res) => {
-        socket.on("message-stored", fetchMessages);
+        socket.on("error-backend", handleError);
+        socket.on("message-stored", (v) => fetchMessages(v || "pouet"));
         setServer(res.data.server);
       })
       .catch((e) => console.error(e));
@@ -63,12 +66,10 @@ const Server = () => {
 
   const getMessageId = (id) => {
     apiHandler
-      .delete(`${process.env.VITE_APP_BACKEND_URL}/server/message/${id}`)
+      .delete(`/server/message/${id}`)
       .then((res) => {
-        console.log("------------------------", res);
-        // fetchMessages();
         const newMessages = messages.filter((message) => message._id !== id);
-        console.log("new message", newMessages);
+
         setMessages(newMessages);
       })
       .catch((e) => console.log(e));
@@ -86,18 +87,21 @@ const Server = () => {
 
     setIsEditing(!isEditing);
     const messageId = editingMessage._id;
-    console.log(editingMessage);
     const content = inputEl.current.value;
 
     apiHandler
-      .patch(
-        `${process.env.VITE_APP_BACKEND_URL}/server/message/${messageId}`,
-        { content }
-      )
-      .then((res) => {
-        // const newMessages =
+      .patch(`/server/message/${messageId}`, { content })
+      .then((data) => {
+        const editedMessage = JSON.parse(data.config.data).content;
+        const msgsTmp = [];
+        for (let i = 0; i < messages.length; i++) {
+          if (messages[i]._id === messageId) {
+            messages[i].content = editedMessage;
+          }
+          msgsTmp.push(messages[i]);
+        }
         inputEl.current.value = "";
-        console.log(res);
+        setMessages(msgsTmp);
       })
       .catch((e) => console.log(e));
   };

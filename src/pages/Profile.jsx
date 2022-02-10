@@ -27,9 +27,8 @@ const Profile = () => {
     e.preventDefault();
 
     const fd = new FormData();
-    fd.append("name", name);
-    fd.append("image", image);
-    console.log(fd);
+    if (name !== "") fd.append("name", name);
+    if (image !== "") fd.append("image", image);
 
     try {
       await apiHandler.patch(`/profile/${id}`, fd).then(({ data }) => {
