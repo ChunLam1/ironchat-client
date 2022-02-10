@@ -14,10 +14,10 @@ const FormSignUp = () => {
 		apiHandler
 			.signup(values)
 			.then(() => {
-				navigate("/signin");
+				navigate("/");
 			})
 			.catch((error) => {
-				setError(error.response.data);
+				setError(error);
 			});
 	};
 	return (

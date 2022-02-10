@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import apiHandler from "../../api/apiHandler";
 
-const FormServer = ({ userId, setServers }) => {
+const FormServer = ({ userId, setServers, closeServer }) => {
   const [name, setName] = useState("");
 
   const handleSubmit = async (e) => {
@@ -20,8 +20,9 @@ const FormServer = ({ userId, setServers }) => {
 
   return (
     <>
+      <i className="fas fa-close" onClick={closeServer} />
       <form onSubmit={handleSubmit}>
-        <div>
+        <div className="createServer-form">
           <label htmlFor="name">Server's name</label>
           <input
             type="text"

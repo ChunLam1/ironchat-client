@@ -28,17 +28,30 @@ const Home = () => {
     <>
       <div className="server">
         {isLoggedIn ? (
-          <div>
+          <>
             <div className="navLP">
               <div className="divLogo">
                 <NavLink className="logo" to="/">
                   IronChat
                 </NavLink>
               </div>
+              <div className="serverContainer">
+              {servers.map((server, i) => (
+                <div key={i} className="serverContainerChild">
+                  <Link to={`/server/${server._id}`} key={server._id}>
+                    <img
+                      className="serverLogo"
+                      src={serverLogo}
+                      alt="serverLogo"
+                    />
+                  </Link>
+                </div>
+              ))}
+            </div>
               <div className="homeicone">
                 <i
                   onClick={() => setAddserver(!addserver)}
-                  class="fa-solid fa-plus"
+                  className="fa-solid fa-plus"
                   style={{ fontSize: "30px" }}
                 ></i>
                 <i
@@ -48,7 +61,10 @@ const Home = () => {
                 ></i>
                 {addserver ? (
                   <div className="servdiv">
-                    <FormServer setServers={setServers} />
+                    <FormServer 
+                      setServers={setServers}
+                      closeServer={() => setAddserver(!addserver)}
+                    />
                   </div>
                 ) : null}
                 {profile ? (
@@ -65,21 +81,7 @@ const Home = () => {
                 </Link> */}
               </div>
             </div>
-            <div className="serverContainer">
-              {servers.map((server, i) => (
-                <div key={i} className="serverContainerChild">
-                  <Link to={`/server/${server._id}`} key={server._id}>
-                    <img
-                      className="serverLogo"
-                      src={serverLogo}
-                      alt="serverLogo"
-                    />
-                    <p className="serverIcone">{server.name}</p>
-                  </Link>
-                </div>
-              ))}
-            </div>
-          </div>
+          </>
         ) : (
           <>
             <div className="home">

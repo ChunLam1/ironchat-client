@@ -56,10 +56,7 @@ const Profile = () => {
   };
 
   return (
-    <div>
-      <NavLink className="logo" to="/">
-        IronChat
-      </NavLink>
+    <div className="profile-edit">
       <form onSubmit={handleSubmit} onChange={handleChange}>
         <label className="label" htmlFor="image"></label>
         <IconAvatar
