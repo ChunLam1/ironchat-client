@@ -48,7 +48,7 @@ const Home = () => {
                 ></i>
                 {addserver ? (
                   <div className="servdiv">
-                    <FormServer />
+                    <FormServer setServers={setServers} />
                   </div>
                 ) : null}
                 {profile ? (

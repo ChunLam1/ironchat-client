@@ -63,11 +63,13 @@ const Server = () => {
 
   const getMessageId = (id) => {
     apiHandler
-      .post(`${process.env.VITE_APP_BACKEND_URL}/server/message/${id}`)
+      .delete(`${process.env.VITE_APP_BACKEND_URL}/server/message/${id}`)
       .then((res) => {
         console.log("------------------------", res);
         // fetchMessages();
-        console.log("lol");
+        const newMessages = messages.filter((message) => message._id !== id);
+        console.log("new message", newMessages);
+        setMessages(newMessages);
       })
       .catch((e) => console.log(e));
   };
@@ -93,6 +95,7 @@ const Server = () => {
         { content }
       )
       .then((res) => {
+        // const newMessages =
         inputEl.current.value = "";
         console.log(res);
       })

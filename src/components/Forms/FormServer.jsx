@@ -1,17 +1,18 @@
 import React, { useEffect, useState, useContext } from "react";
 import apiHandler from "../../api/apiHandler";
 
-const FormServer = ({ userId }) => {
+const FormServer = ({ userId, setServers }) => {
   const [name, setName] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await apiHandler.post("/server", { 
+      const res = await apiHandler.post("/server", {
         name,
         participants: userId,
-        admins: userId
+        admins: userId,
       });
+      setServers((servers) => [...servers, res.data]);
     } catch (error) {
       console.error(e);
     }

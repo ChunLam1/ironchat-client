@@ -63,7 +63,7 @@ const Profile = () => {
       <form onSubmit={handleSubmit} onChange={handleChange}>
         <label className="label" htmlFor="image"></label>
         <IconAvatar
-          avatar={imageTmp || image}
+          avatar={imageTmp ? imageTmp : currentUser?.image}
           clbk={(e) => handleImage(e.target.files[0])}
           id="image"
         />
