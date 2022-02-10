@@ -11,7 +11,7 @@ import FormServer from "../components/Forms/FormServer";
 const Home = () => {
   const [register, setRegister] = useState(false);
   const [servers, setServers] = useState([]);
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, currentUser } = useAuth();
   const [profile, setProfile] = useState(false);
   const [addserver, setAddserver] = useState(false);
 
@@ -23,6 +23,14 @@ const Home = () => {
       })
       .catch((e) => console.log(e));
   }, []);
+
+  const handleImgClick = (serverId) => {
+    const userId = currentUser._id;
+    apiHandler
+      .post(`/server/${serverId}/participants`, { participants: userId })
+      .then((res) => console.log(res))
+      .catch((e) => console.log(e));
+  };
 
   return (
     <>
@@ -36,18 +44,19 @@ const Home = () => {
                 </NavLink>
               </div>
               <div className="serverContainer">
-              {servers.map((server, i) => (
-                <div key={i} className="serverContainerChild">
-                  <Link to={`/server/${server._id}`} key={server._id}>
-                    <img
-                      className="serverLogo"
-                      src={serverLogo}
-                      alt="serverLogo"
-                    />
-                  </Link>
-                </div>
-              ))}
-            </div>
+                {servers.map((server, i) => (
+                  <div key={i} className="serverContainerChild">
+                    <Link to={`/server/${server._id}`} key={server._id}>
+                      <img
+                        onClick={() => handleImgClick(server._id)}
+                        className="serverLogo"
+                        src={serverLogo}
+                        alt="serverLogo"
+                      />
+                    </Link>
+                  </div>
+                ))}
+              </div>
               <div className="homeicone">
                 <i
                   onClick={() => setAddserver(!addserver)}
@@ -61,7 +70,7 @@ const Home = () => {
                 ></i>
                 {addserver ? (
                   <div className="servdiv">
-                    <FormServer 
+                    <FormServer
                       setServers={setServers}
                       closeServer={() => setAddserver(!addserver)}
                     />

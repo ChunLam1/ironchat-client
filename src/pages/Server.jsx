@@ -6,13 +6,13 @@ import "../styles/socketio.css";
 import { Link, NavLink } from "react-router-dom";
 import Profile from "./Profile";
 import NavMain from "../components/Nav/NavMain";
+import Participants from "../components/List/Participants";
 
 import { io } from "socket.io-client";
 
-console.log("hop", import.meta.env.VITE_APP_SOCKET_URL);
-
 const socket = io(
-  import.meta.env.VITE_APP_SOCKET_URL || "http://localhost:4200"
+  import.meta.env.VITE_APP_SOCKET_URL || "http://localhost:4200",
+  { withCredentials: true }
 );
 
 const Server = () => {
@@ -20,6 +20,7 @@ const Server = () => {
   const [server, setServer] = useState({});
   const [isEditing, setIsEditing] = useState(false);
   const [editingMessage, setEditingMessage] = useState({});
+  // const [listParticipants, setListParticipants] = useState([]);
   const inputEl = useRef("");
   const serverId = useParams();
   const { currentUser } = useAuth();
@@ -42,13 +43,14 @@ const Server = () => {
     apiHandler
       .get(`/server/${serverId.id}`)
       .then((res) => {
+        console.log(res);
         socket.on("error-backend", handleError);
         socket.on("message-stored", (v) => fetchMessages(v || "pouet"));
         setServer(res.data.server);
       })
       .catch((e) => console.error(e));
   }, []);
-
+  console.log(server);
   useEffect(() => {
     fetchMessages();
   }, [server]);
@@ -130,27 +132,41 @@ const Server = () => {
         </div>
       ) : null}
       <h1>Server name: {server.name}</h1>
-      <ul id="messages">
-        {messages.map((msg) => (
-          <li key={msg._id}>
-            <b>{msg.userId.name} : </b>
-            <div>
-              {msg.content}
-              <div className="message-edit">
-                <i
-                  className="fas fa-trash"
-                  onClick={() => getMessageId(msg._id)}
+
+      <div className="participantsList">
+        <Participants server={server} />
+        <div className="chatbox">
+          <ul id="messages">
+            {messages.map((msg) => (
+              <li key={msg._id}>
+                <img
+                  src={currentUser.image}
+                  alt={currentUser.name}
+                  style={{ width: 60, borderRadius: "50%" }}
                 />
-                <i className="fas fa-pencil" onClick={() => editMessage(msg)} />
-              </div>
-            </div>
-          </li>
-        ))}
-      </ul>
-      <form id="form" onSubmit={!isEditing ? sendMessage : sendEditMessage}>
-        <input id="input" autoComplete="off" ref={inputEl} />
-        <button>Send</button>
-      </form>
+                <b>{msg.userId.name} : </b>
+                <div>
+                  {msg.content}
+                  <div className="message-edit">
+                    <i
+                      className="fas fa-trash"
+                      onClick={() => getMessageId(msg._id)}
+                    />
+                    <i
+                      className="fas fa-pencil"
+                      onClick={() => editMessage(msg)}
+                    />
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <form id="form" onSubmit={!isEditing ? sendMessage : sendEditMessage}>
+          <input id="input" autoComplete="off" ref={inputEl} />
+          <button>Send</button>
+        </form>
+      </div>
     </div>
   );
 };

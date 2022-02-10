@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { useState } from "react";
 import apiHandler from "../api/apiHandler";
 import useAuth from "../auth/useAuth";
 import IconAvatar from "../components/Icon/IconAvatarAdmin";
