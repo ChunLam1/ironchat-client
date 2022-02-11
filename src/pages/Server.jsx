@@ -20,7 +20,6 @@ const Server = () => {
   const [server, setServer] = useState({});
   const [isEditing, setIsEditing] = useState(false);
   const [editingMessage, setEditingMessage] = useState({});
-  // const [listParticipants, setListParticipants] = useState([]);
   const inputEl = useRef("");
   const serverId = useParams();
   const { currentUser } = useAuth();
@@ -71,7 +70,6 @@ const Server = () => {
       .delete(`/server/message/${id}`)
       .then((res) => {
         const newMessages = messages.filter((message) => message._id !== id);
-
         setMessages(newMessages);
       })
       .catch((e) => console.log(e));
@@ -147,16 +145,18 @@ const Server = () => {
                 <b>{msg.userId.name} : </b>
                 <div>
                   {msg.content}
-                  <div className="message-edit">
-                    <i
-                      className="fas fa-trash"
-                      onClick={() => getMessageId(msg._id)}
-                    />
-                    <i
-                      className="fas fa-pencil"
-                      onClick={() => editMessage(msg)}
-                    />
-                  </div>
+                  {msg.userId._id == currentUser._id && (
+                    <div className="message-edit">
+                      <i
+                        className="fas fa-trash"
+                        onClick={() => getMessageId(msg._id)}
+                      />
+                      <i
+                        className="fas fa-pencil"
+                        onClick={() => editMessage(msg)}
+                      />
+                    </div>
+                  )}
                 </div>
               </li>
             ))}
