@@ -63,13 +63,13 @@ const Profile = () => {
           id="image"
         />
         <input
-          style={{ borderRadius: "50px", border: "none", cursor: "pointer" }}
+          style={{ borderRadius: "50px", border: "none", cursor: "pointer",backgroundColor:"inherit",color:"white"}}
           type="text"
           defaultValue={name}
           id="name"
           name="name"
         ></input>
-        <button style={{ borderRadius: "50px" }}>Ok!!</button>
+        <button style={{ borderRadius: "10px",padding:"0px 20px" }}>Ok</button>
       </form>
     </div>
   );

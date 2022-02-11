@@ -12,11 +12,12 @@ export default function IconAvatar({ clbk, avatar = "" }) {
 
   return (
     <div className={"is-clickable icon-avatar"} title="change avatar">
-      {avatar && <img style={{ width: 250 }} src={avatar} alt="user avatar" />}
+      {avatar && <img style={{ width: 150,borderRadius:"50%" }} src={avatar} alt="user avatar" />}
       <input
         ref={fileInput}
         type="file"
         className="is-hidden"
+        
         onChange={clbk}
       />
       <FontAwesomeIcon

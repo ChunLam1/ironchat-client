@@ -7,6 +7,7 @@ import { Link, NavLink } from "react-router-dom";
 import Profile from "./Profile";
 import NavMain from "../components/Nav/NavMain";
 import Participants from "../components/List/Participants";
+import Logo from "../images/Ironchat.png"
 
 import { io } from "socket.io-client";
 
@@ -44,7 +45,9 @@ const Server = () => {
       .then((res) => {
         console.log(res);
         socket.on("error-backend", handleError);
-        socket.on("message-stored", (v) => fetchMessages(v || "pouet"));
+        socket.on("message-stored", (v) => {
+          fetchMessages(v || "pouet")
+        });
         setServer(res.data.server);
       })
       .catch((e) => console.error(e));
@@ -112,15 +115,24 @@ const Server = () => {
       <div className="navLP">
         <div className="divLogo">
           <NavLink className="logo" to="/">
+            <img style={{ width: "50px" }} src={Logo} alt="" />
             IronChat
           </NavLink>
         </div>
         <div className="homeicone">
-          <i
-            onClick={() => setProfile(!profile)}
-            className="fas fa-user-circle"
-            style={{ fontSize: "30px" }}
-          ></i>
+        {currentUser.image ? (
+                  <img
+                    src={currentUser.image}
+                    style={{ width: 40,borderRadius:"50%"  }}
+                    onClick={() => setProfile(!profile)}
+                  />
+                ) : (
+                  <i
+                    onClick={() => setProfile(!profile)}
+                    className="fas fa-user-circle"
+                    style={{ fontSize: "30px"}}
+                  ></i>
+                )}
         </div>
       </div>
       {profile ? (
@@ -129,22 +141,24 @@ const Server = () => {
           <NavMain />
         </div>
       ) : null}
-      <h1>Server name: {server.name}</h1>
+      <h1 className="h1server">
+         <p>{server.name}</p>{" "}
+      </h1>
 
       <div className="participantsList">
         <Participants server={server} />
         <div className="chatbox">
           <ul id="messages">
             {messages.map((msg) => (
-              <li key={msg._id}>
+              <li key={msg._id} className="msgli">
                 <img
                   src={currentUser.image}
-                  alt={currentUser.name}
+                  alt=""
                   style={{ width: 60, borderRadius: "50%" }}
                 />
                 <b>{msg.userId.name} : </b>
+                <p>{msg.content}</p>
                 <div>
-                  {msg.content}
                   {msg.userId._id == currentUser._id && (
                     <div className="message-edit">
                       <i

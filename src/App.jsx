@@ -5,11 +5,12 @@ import PrivateRoute from "./components/ProtectedRoute/PrivateRoute";
 import Server from "./pages/Server";
 import Profile from "./pages/Profile";
 import "./styles/global.css";
-import FormServer from "./components/Forms/FormServer";
-
+import {NavLink} from "react-router-dom"
+import Logo from "./images/Ironchat.png"
 function App() {
   return (
     <div className="App">
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route element={<PrivateRoute />}>

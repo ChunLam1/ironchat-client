@@ -8,6 +8,8 @@ import serverLogo from "../images/téléchargement.png";
 import Profile from "./Profile";
 import NavMain from "../components/Nav/NavMain";
 import FormServer from "../components/Forms/FormServer";
+import Logo from "../images/Ironchat.png";
+
 const Home = () => {
   const [register, setRegister] = useState(false);
   const [servers, setServers] = useState([]);
@@ -40,6 +42,7 @@ const Home = () => {
             <div className="navLP">
               <div className="divLogo">
                 <NavLink className="logo" to="/">
+                  <img style={{ width: "50px" }} src={Logo} alt="" />
                   IronChat
                 </NavLink>
               </div>
@@ -53,6 +56,7 @@ const Home = () => {
                         src={serverLogo}
                         alt="serverLogo"
                       />
+                      <p className="serverIcone">{server.name}</p>
                     </Link>
                   </div>
                 ))}
@@ -63,11 +67,25 @@ const Home = () => {
                   className="fa-solid fa-plus"
                   style={{ fontSize: "30px" }}
                 ></i>
-                <i
+                {/* <i
                   onClick={() => setProfile(!profile)}
                   className="fas fa-user-circle"
                   style={{ fontSize: "30px" }}
-                ></i>
+                ></i> */}
+                {currentUser.image ? (
+                  <img
+                    src={currentUser.image}
+                    style={{ width: 40,borderRadius:"50%" }}
+                    onClick={() => setProfile(!profile)}
+                  />
+                ) : (
+                  <i
+                    onClick={() => setProfile(!profile)}
+                    className="fas fa-user-circle"
+                    style={{ fontSize: "30px" }}
+                  ></i>
+                )}
+
                 {addserver ? (
                   <div className="servdiv">
                     <FormServer

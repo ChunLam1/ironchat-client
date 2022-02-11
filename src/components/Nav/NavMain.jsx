@@ -21,7 +21,7 @@ const NavMain = () => {
     <nav className="NavMain">
       {isLoggedIn && (
         <>
-          <button onClick={removeUser}>Log-Out</button>
+          <button className="Logoutbtn" onClick={removeUser}>Log-Out</button>
         </>
       )}
     </nav>
